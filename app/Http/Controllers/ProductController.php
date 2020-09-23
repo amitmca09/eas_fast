@@ -124,7 +124,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $this->productRepository->pushCriteria(new ProductsOfUserCriteria(auth()->id()));
-        $product = $this->productRepository->findWithoutFail($id);
+        $product = $this->productRepository->find($id);
 
         if (empty($product)) {
             Flash::error('Product not found');
@@ -146,7 +146,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $this->productRepository->pushCriteria(new ProductsOfUserCriteria(auth()->id()));
-        $product = $this->productRepository->findWithoutFail($id);
+        $product = $this->productRepository->find($id);
         if (empty($product)) {
             Flash::error(__('lang.not_found', ['operator' => __('lang.product')]));
             return redirect(route('products.index'));
@@ -179,7 +179,7 @@ class ProductController extends Controller
     public function update($id, UpdateProductRequest $request)
     {
         $this->productRepository->pushCriteria(new ProductsOfUserCriteria(auth()->id()));
-        $product = $this->productRepository->findWithoutFail($id);
+        $product = $this->productRepository->find($id);
 
         if (empty($product)) {
             Flash::error('Product not found');
@@ -219,7 +219,7 @@ class ProductController extends Controller
     {
         if (!env('APP_DEMO', false)) {
             $this->productRepository->pushCriteria(new ProductsOfUserCriteria(auth()->id()));
-            $product = $this->productRepository->findWithoutFail($id);
+            $product = $this->productRepository->find($id);
 
             if (empty($product)) {
                 Flash::error('Product not found');
@@ -244,7 +244,7 @@ class ProductController extends Controller
     public function removeMedia(Request $request)
     {
         $input = $request->all();
-        $product = $this->productRepository->findWithoutFail($input['id']);
+        $product = $this->productRepository->find($input['id']);
         try {
             if ($product->hasMedia($input['collection'])) {
                 $product->getFirstMedia($input['collection'])->delete();
