@@ -12,6 +12,11 @@
 |
 */
 
+Route::get('/config-cache', function() {
+    Artisan::call('config:cache');
+    return '<h1>Config cache cleared successfully</h1>';
+});
+
 Route::get('login/{service}', 'Auth\LoginController@redirectToProvider');
 Route::get('login/{service}/callback', 'Auth\LoginController@handleProviderCallback');
 Auth::routes();
@@ -33,7 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
-    Route::post('uploads/store', 'UploadController@store')->name('medias.create');
+    Route::post('uploads/store2', 'UploadController@store2');
     Route::get('users/profile', 'UserController@profile')->name('users.profile');
     Route::post('users/remove-media', 'UserController@removeMedia');
     Route::resource('users', 'UserController');

@@ -36,8 +36,8 @@ class UploadRepository extends BaseRepository
 
     public function getByUuid($uuid = '')
     {
-        $uploadModel = Upload::query()->where('uuid', $uuid);
-        return $uploadModel;
+       $uploadModel = Upload::query()->where('uuid', $uuid)->first();
+       return $uploadModel;
     }
 
     /**

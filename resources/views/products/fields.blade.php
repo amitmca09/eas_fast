@@ -38,7 +38,7 @@
             };
                     @endif
             var dz_var15671147171873255749ble = $(".dropzone.image").dropzone({
-                    url: "{!!url('uploads/store')!!}",
+                    url: "{!! url('uploads/store2') !!}",
                     addRemoveLinks: true,
                     maxFiles: 1,
                     init: function () {

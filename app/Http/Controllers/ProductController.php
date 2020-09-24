@@ -95,14 +95,18 @@ class ProductController extends Controller
     public function store(CreateProductRequest $request)
     {
         $input = $request->all();
+
         $customFields = $this->customFieldRepository->findByField('custom_field_model', $this->productRepository->model());
         try {
             $product = $this->productRepository->create($input);
             $product->customFieldsValues()->createMany(getCustomFieldsValues($customFields, $request));
             if (isset($input['image']) && $input['image']) {
                 $cacheUpload = $this->uploadRepository->getByUuid($input['image']);
-                $mediaItem = $this->uploadRepository->allMedia('image')->first();
-                $mediaItem->copy($product, 'image');
+
+                
+
+                $mediaItem = $this->uploadRepository->getMedia('image')->first();
+               $mediaItem->copy($product, 'image');
             }
         } catch (ValidatorException $e) {
             Flash::error($e->getMessage());

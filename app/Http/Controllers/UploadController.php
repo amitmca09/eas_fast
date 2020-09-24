@@ -71,7 +71,11 @@ class UploadController extends Controller
      */
     public function store(UploadRequest $request)
     {
+
         $input = $request->all();
+
+        print_r($input);
+
         try {
             $upload = $this->uploadRepository->create($input);
             $upload->addMedia($input['file'])
@@ -80,6 +84,22 @@ class UploadController extends Controller
         } catch (ValidatorException $e) {
             return $this->sendResponse(false, $e->getMessage());
         }
+    }
+
+      public function store2(UploadRequest $request)
+    {
+
+        $input = $request->all();
+
+           try {
+            $upload = $this->uploadRepository->create($input);
+            $upload->addMedia($input['file'])
+                ->withCustomProperties(['uuid' => $input['uuid'], 'user_id' => auth()->id()])
+                ->toMediaCollection($input['field']);
+        } catch (ValidatorException $e) {
+            return $this->sendResponse(false, $e->getMessage());
+        }
+
     }
 
     /**
